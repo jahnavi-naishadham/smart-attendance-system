@@ -1,0 +1,127 @@
+<!-- templates/attendance/qr_code.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ topic.title }} - QR Code</title>
+    <link rel="stylesheet" href="{% static 'css/qr_code.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0E9F7A, #1CC09F, #68D1A6, #133E37);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:100vh;
+        }
+        .container
+        {
+            background: #283643;
+            color: #1CC09F;
+            box-shadow: 10px 10px 10px #484242;
+        }
+        h1
+        {
+            color: #1CC09F;
+        }
+           header {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                box-sizing: border-box;
+           }
+            #timer
+            {
+                font-size:2em;
+            }
+            header .logo {
+                position: relative;
+                top: 10px;
+                left: 20px;
+                width: 150px;
+                height: auto;
+                box-shadow:0px 6px 6px #283643;
+            }
+            .qr-code img
+            {
+                box-shadow: 10px 10px 10px #484242;
+            }
+            footer {
+                background-color: #283643;
+                font-weight:bolder;
+                color: #fff;
+                text-align: center;
+                padding: 10px 20px;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+        </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'img/klhlogo.png' %}" alt="KL University Logo" class="logo">
+        </header>
+     <div class="container">
+        <h1>{{ topic.title }} - QR Code</h1>
+        <div class="qr-code">
+            <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+        </div>
+         <div id="timer">02:00</div>
+         <form method="post" action="{% url 'stop_attendance' topic.id %}">
+        {% csrf_token %}
+        <button type="submit">Stop Attendance</button>
+    </form>
+    </div>
+    <footer>
+        <p>Developed by Sayyed Sameer Basir, N. Jahnavi, Mehak Goyal and G Pranav Kumar in collaboration with KL University Hyderabad</p>
+    </footer>
+    <script>
+    function startTimer(duration, display) {
+        var start = Date.now(),
+            diff,
+            minutes,
+            seconds;
+
+        function timer() {
+            diff = duration - (((Date.now() - start) / 1000) | 0);
+
+            // For the last 10 seconds
+            if (diff <= 10 && diff > 0) {
+                display.style.color = 'red'; // Change color to red
+                display.style.fontSize = '3em'; // Make the font larger
+                display.textContent = diff; // Display only the seconds as a number
+            } else {
+                minutes = (diff / 60) | 0;
+                seconds = (diff % 60) | 0;
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+            }
+
+            if (diff <= 0) {
+                location.reload(); // Reload the page to generate a new QR code
+            }
+        }
+
+        timer();
+        setInterval(timer, 1000);
+    }
+
+    window.onload = function () {
+        var countdownTime = 2 * 60, // 2 minutes
+            display = document.querySelector('#timer');
+        startTimer(countdownTime, display);
+    };
+</script>
+
+</body>
+</html>

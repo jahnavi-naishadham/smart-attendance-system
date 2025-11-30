@@ -1,0 +1,97 @@
+<!-- attendance/templates/create_topic.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Topic</title>
+    <link rel="stylesheet" href="{% static 'css/create_topic.css' %}">
+    <style>
+    body
+    {
+        background: linear-gradient(135deg, #0E9F7A, #1CC09F, #68D1A6, #133E37);
+    }
+    .container{
+        background: #283643;
+        color: #1CC09F;
+    }
+    h2 {
+    margin-bottom: 30px;
+    color: #1CC09F;
+    }
+    .form-group {
+    width: 100%;
+    margin-bottom: 20px;
+    color: #1CC09F;
+    }
+    .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #1CC09F;
+    font-size:20px;
+}
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size:25px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+           header {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                box-sizing: border-box;
+           }
+
+            header .logo {
+                position: relative;
+                top: 10px;
+                left: 20px;
+                width: 150px;
+                height: auto;
+                box-shadow:0px 6px 6px #283643;
+            }
+            footer {
+                background-color: #283643;
+                font-weight:bolder;
+                color: #fff;
+                text-align: center;
+                padding: 10px 20px;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+        </style>
+</head>
+<body>
+<header>
+        <img src="{% static 'img/klhlogo.png' %}" alt="KL University Logo" class="logo">
+        </header>
+    <div class="container">
+        <h2>Create Topic</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-create">Create</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+<footer>
+        <p>Developed by Sayyed Sameer Basir, N. Jahnavi, Mehak Goyal and G Pranav Kumar in collaboration with KL University Hyderabad</p>
+    </footer>
+</body>
+</html>

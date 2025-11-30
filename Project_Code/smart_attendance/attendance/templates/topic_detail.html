@@ -1,0 +1,437 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ topic.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/topic_detail.css' %}">
+    <style>
+    body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0E9F7A, #1CC09F, #68D1A6, #133E37);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:100vh;
+        }
+        .btn-download
+        {
+        width:20%;
+        }
+         .container {
+            background-color: #283643;
+            color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1300px;
+            width: 90%;
+            height: 75vh;
+            overflow-y: auto; /* Enable vertical scrolling */
+            box-shadow: 2px 2px #155263;
+            margin-top: -50px;
+            margin-left: 150px;
+        }
+        ::placeholder {
+            color: #aaa;
+        }
+        header {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                box-sizing: border-box;
+           }
+            h1 {
+            margin-bottom: 30px;
+            color: #fff;
+            font-size:30px;
+            font-weight:bolder;
+            position:relative;
+            bottom:40px;
+        }
+        h2
+        {
+            color: #1CC09F;
+            font-size:30px;
+            font-weight:bolder;
+        }
+            header .logo {
+                position: relative;
+                top: 10px;
+                left: 20px;
+                width: 150px;
+                height: auto;
+                box-shadow:0px 6px 6px #283643;
+            }
+            th{
+            color:#000;
+            }
+            table tbody tr:nth-child(even) {
+            background-color: #575f67;
+            color:#fff;
+        }
+         table tbody tr:hover {
+            background-color: #000;
+        }
+            .actions {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .actions .btn {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #f8b400;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position:relative;
+            bottom:50px;
+        }
+        .actions .btn-attendance {
+            background-color: #5e227f;
+        }
+
+        .actions .btn-dashboard {
+            background-color: #ff9a3c;
+        }
+
+        .actions .btn-manual {
+            background-color: #4850b9; /* Dark gray, change as needed */
+        }
+
+        .actions .btn:hover {
+            opacity: 0.8;
+        }
+
+        .fas
+        {
+        margin-right:8px;
+        }
+
+        .btn-download {
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #f5f5f5;
+            background-color: #22267b;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center; /* Center items vertically */
+            box-shadow: 2px 2px black;
+            width:12%;
+            height:30px;
+            justify-content:center;
+            position:relative;
+            bottom:50px;
+        }
+
+        .btn-download:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: scale(1.01);
+        }
+
+        /* Style for the download icon */
+        .btn-download i {
+            margin-right: 5px;
+        }
+
+        #search-box-container {
+            position: relative;
+            margin-bottom: 20px;
+            position:relative;
+            bottom:50px;
+            color:#283643;
+        }
+        h2{
+            position:relative;
+            bottom:50px;
+        }
+        #search-box {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #283643;
+            cursor: pointer;
+        }
+
+        #search-box:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        ::placeholder {
+            color: #aaa;
+        }
+        #total-entries
+        {
+            position:relative;
+            bottom:50px;
+        }
+        table{
+            position:relative;
+            bottom:50px;
+        }
+
+        .pagination {
+            text-align: center;
+<!--            margin-top: 20px;-->
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #6b4897;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position:relative;
+            bottom:50px;
+        }
+        .pagination button:hover {
+            background-color: #6b4897;
+        }
+        .pagination button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .pagination button:hover:enabled {
+            background-color: #6b4897;
+        }
+        #section-number
+        {
+        position:relative;
+        bottom:50px;
+        }
+        /* Your existing styles here */
+    #entries-table img {
+        max-width: 100px;
+        max-height: 100px;
+        object-fit: cover;
+    }
+          footer {
+                background-color: #283643;
+                font-weight:bolder;
+                color: #fff;
+                text-align: center;
+                padding: 10px 20px;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+    </style>
+</head>
+<body>
+<header>
+        <img src="{% static 'img/klhlogo.png' %}" alt="KL University Logo" class="logo">
+        </header>
+<div class="container">
+    <h1>{{ topic.title }}</h1>
+    <div class="actions">
+        <a href="{% url 'generate_qr_code' topic.id %}" class="btn btn-attendance"><i class="fas fa-play"></i>Start Taking Attendance</a>
+        <a href="{% url 'add_manual_entry' topic.id %}" class="btn btn-manual"><i class="fas fa-book"></i>Add Manually</a> <!-- Add manually button -->
+        <a href="{% url 'dashboard' %}" class="btn btn-dashboard"><i class="fas fa-arrow-left"></i>Back to Dashboard</a>
+    </div>
+
+    <!-- Success message popup -->
+    <div id="success-popup" class="success-popup">
+        Details added successfully!
+    </div>
+
+    <!-- Search form -->
+    <div id="search-box-container">
+            <input type="text" id="search-box" placeholder="Search by name or roll number">
+            <i id="search-icon" class="fas fa-search"></i>
+        </div>
+
+    <!-- Add this button to your template -->
+    <div class="btn-group">
+            <a href="{% url 'download_topic_details_as_csv' topic.id %}" class="btn btn-download"> <i class="fas fa-download"></i>Download CSV</a>
+        </div>
+
+    <h2><i class="fas fa-edit"></i> Attendance Entries</h2>
+    <p id="total-entries"><i class="fas fa-bars"></i> Total Entries: {{ topic.attendanceentry_set.count }} <th><i id="reset-icon" class="fa fa-sync reset-icon" aria-hidden="true" title="Click to show default arrangement"></i></th></p>
+     <table id="entries-table">
+        <thead>
+        <tr>
+            <th>Serial Number</th>
+            <th>Name <i id="sort-name-icon" class="fa fa-sort" aria-hidden="true" title="Click to sort based on name"></i></th>
+            <th>Roll Number <i id="sort-roll-icon" class="fa fa-sort" aria-hidden="true" title="Click to sort based on roll number"></i></th>
+<!--            <th>Selfie</th>-->
+        </tr>
+        </thead>
+        <tbody id="entries-tbody">
+        {% for entry in topic.attendanceentry_set.all %}
+        <tr class="entry-row">
+            <td>{{ forloop.counter }}</td>
+            <td>{{ entry.name }}</td>
+            <td>{{ entry.roll_number }}</td>
+<!--            <td>-->
+<!--                {% if entry.selfie %}-->
+<!--                    <img src="{{ entry.selfie.url }}" alt="Selfie">-->
+<!--                {% else %}-->
+<!--                    No selfie-->
+<!--                {% endif %}-->
+<!--            </td>-->
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+    <button id="prev-btn" {% if not prev_page %}disabled{% endif %}>
+        <i class="fas fa-arrow-left"></i> Prev
+    </button>
+    <span id="section-number"></span>
+    <button id="next-btn" {% if not next_page %}disabled{% endif %}>
+        Next <i class="fas fa-arrow-right"></i>
+    </button>
+</div>
+</div>
+<footer>
+        <p>Developed by Sayyed Sameer Basir, N. Jahnavi, Mehak Goyal and G Pranav Kumar in collaboration with KL University Hyderabad</p>
+    </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/topic_detail.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        const entriesPerPage = 20;
+        const totalEntries = $(".entry-row").length;
+        const totalPages = Math.ceil(totalEntries / entriesPerPage);
+        let currentPage = 1;
+
+        function showPage(page) {
+            $(".entry-row").hide();
+            $(".entry-row").slice((page - 1) * entriesPerPage, page * entriesPerPage).show();
+            $("#section-number").text("Section " + page + " of " + totalPages);
+
+            // Disable prev button on the first page
+            if (page === 1) {
+                $("#prev-btn").prop('disabled', true);
+            } else {
+                $("#prev-btn").prop('disabled', false);
+            }
+
+            // Disable next button on the last page
+            if (page === totalPages) {
+                $("#next-btn").prop('disabled', true);
+            } else {
+                $("#next-btn").prop('disabled', false);
+            }
+        }
+
+        $("#prev-btn").click(function () {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        $("#next-btn").click(function () {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        showPage(currentPage);
+
+        // Function to sort entries based on roll number
+        $("#sort-roll-icon").click(function () {
+            var entries = $(".entry-row");
+            entries.sort(function (a, b) {
+                var rollA = parseInt($(a).find("td:eq(2)").text());
+                var rollB = parseInt($(b).find("td:eq(2)").text());
+                return rollA - rollB;
+            });
+            $("#entries-table tbody").empty().append(entries);
+            $("#sort-name-icon").removeClass("desc");
+            $(this).toggleClass("desc");
+        });
+
+        // Function to sort entries based on name
+        $("#sort-name-icon").click(function () {
+            var entries = $(".entry-row");
+            entries.sort(function (a, b) {
+                var nameA = $(a).find("td:eq(1)").text().toUpperCase();
+                var nameB = $(b).find("td:eq(1)").text().toUpperCase();
+                return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
+            });
+            $("#entries-table tbody").empty().append(entries);
+            $("#sort-roll-icon").removeClass("desc");
+            $(this).toggleClass("desc");
+        });
+
+        // Function to reset sorting to default
+        $("#reset-icon").click(function () {
+            location.reload();
+        });
+
+        // Handling success message display
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('success') && urlParams.get('success') === 'true') {
+            $('#success-popup').fadeIn().delay(5000).fadeOut();
+        }
+
+        // Handle CSV download button click
+        $("#download-csv").click(function () {
+            var topicId = "{{ topic.id }}";
+            window.location.href = `/attendance/${topicId}/download-csv/`;
+        });
+
+         $("#search-box").on("input", function () {
+            var query = $(this).val().toLowerCase().trim(); // Get the search query
+            $(".entry-row").each(function () {
+                var name = $(this).find("td:eq(1)").text().toLowerCase().trim(); // Get name in lowercase
+                var rollNumber = $(this).find("td:eq(2)").text().toLowerCase().trim(); // Get roll number in lowercase
+                if (name.includes(query) || rollNumber.includes(query)) {
+                    $(this).show(); // Show row if matches query
+                } else {
+                    $(this).hide(); // Hide row if does not match query
+                }
+            });
+        });
+    });
+
+document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('download-csv').addEventListener('click', function() {
+                var topicId = {{ topic.id }}; // Pass topic id from Django context
+                var url = `/attendance/${topicId}/download-csv/`;
+                window.location.href = url;
+            });
+        });
+
+</script>
+</body>
+</html>
